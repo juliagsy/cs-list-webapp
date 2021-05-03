@@ -1,0 +1,23 @@
+<project >
+  
+  <modelVersion> </modelVersion>
+  <groupId> </groupId>
+  <artifactId> </artifactId>
+  <version> </version>
+  <packaging> </packaging>
+  <name> </name>
+  <url> </url>
+
+  <properties>
+
+  </properties>
+
+  <build>
+    <plugins>
+    </plugins>
+  </build>
+
+  <dependencies>
+  </dependencies>
+
+</project>
