@@ -14,11 +14,11 @@ public class Main
   {
     String webappLocation = "src/main/webapp";
     Tomcat tomcat = new Tomcat();
-    tomcat.setport(8080);
+    tomcat.setPort(8080);
 
     tomcat.getConnector();
 
-    StandardContext stdCtx = (StandardContext) tomcat.addWebapp("/", new File(webappDirLocation).getAbsolutePath());
+    StandardContext stdCtx = (StandardContext) tomcat.addWebapp("/", new File(webappLocation).getAbsolutePath());
     File webClasses = new File("target/classes");
     WebResourceRoot webRsrcRoot = new StandardRoot(stdCtx);
     webRsrcRoot.addPreResources(new DirResourceSet(webRsrcRoot, "/WEB-INF/classes", webClasses.getAbsolutePath(), "/"));

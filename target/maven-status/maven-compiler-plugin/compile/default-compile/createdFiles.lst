@@ -1,0 +1,6 @@
+cw3/pckg/model/ModelFactory.class
+cw3/pckg/model/Column.class
+cw3/pckg/model/DataFrame.class
+cw3/pckg/main/Main.class
+cw3/pckg/servlets/LoadServlet.class
+cw3/pckg/model/Model.class
