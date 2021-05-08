@@ -7,17 +7,11 @@
 
 <body>
   <h1>Welcome! I am your personal list processing app!</h1>
-  <p>Choose either to create new file or load existing file for me to process and perform operations.</p>
+  <p>I will load all data files in the <b>data</b> directory. Click the button below to start!</p>
 
-  <h3>Load existing file</h3>
-  <form method="POST" action="/load.html">
-    <input type="file" name="selectedFile" accept=".csv, .json" required>
-    <br>
-    <input type="submit" value="Go!">
-  </form>
-
-  <h3>Create new file</h3>
-  <form method="POST" action="/create.html">
+  <h3>Let's Start!</h3>
+  <form method="POST" action="/firstload.html">
+    <input type="submit" value="Start!">
   </form>
 
 </body>
