@@ -13,25 +13,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/load.html")
-public class LoadServlet extends HttpServlet
+@WebServlet("/runrename.html")
+public class RenameServlet extends HttpServlet
 {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
     Model model = ModelFactory.getModel();
-    String filepath = "./data/" + request.getParameter("selectedFile");
+
+    model.renameList(request.getParameter("list"),request.getParameter("newname"));
 
     ServletContext context = getServletContext();
-    RequestDispatcher dispatch;
-    try
-    {
-      model.loadFile(filepath);
-      dispatch = context.getRequestDispatcher("/loaded.jsp");
-    }
-    catch (IOException e)
-    {
-      dispatch = context.getRequestDispatcher("/loadError.html");
-    }
+    RequestDispatcher dispatch = context.getRequestDispatcher("/action.jsp");
     dispatch.forward(request,response);
   }
 }
