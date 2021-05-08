@@ -18,25 +18,84 @@ public class Model
     listCount = 0;
   }
 
-  public void loadFile(String pathname) throws IOException
+  private void deleteFile(String name) throws IOException
   {
-    String label;
-    DataFrame newFrame;
-    int length = pathname.length();
-    File file = new File(pathname);
-    if (!file.exists())
+    File file = new File("./data/"+name+".csv");
+    file.delete();
+  }
+
+  private void renameFile(String oldname, String newname) throws IOException
+  {
+    File oldpath = new File("./data/"+oldname+".csv");
+    File newpath = new File("./data/"+newname+".csv");
+    oldpath.renameTo(newpath);
+  }
+
+  public ArrayList<String> getLabels()
+  {
+    return allLabels;
+  }
+
+  public void loadDataDirectory(File dataFolder) throws IOException
+  {
+    for (File dataFile : dataFolder.listFiles())
     {
-      throw new IOException();
+      if (dataFile.isDirectory())
+      {
+        loadDataDirectory(dataFile);
+      }
+      else
+      {
+        loadFile(dataFile);
+      }
     }
-    else if (pathname.charAt(length-1) == 'v')
+  }
+
+  public void loadFile(File dataFile) throws IOException
+  {
+    String filename = dataFile.getName();
+    int length = filename.length();
+
+    if (filename.substring(length-3,length).compareTo("csv") == 0)
     {
       CSVLoader csv = new CSVLoader();
-      newFrame = csv.load(file);
-      label = pathname.substring(7,length-4);
+      DataFrame newFrame = csv.load(dataFile);
+      String label = filename.substring(0,length-4);
+      allLabels.add(label);
+      allDataFrames.add(newFrame);
+      listCount ++;
     }
-    else if (pathname.charAt(length-1) == 'n')
-    {
-      JSONLoader json = new JSONLoader();
-    }
+  }
+
+  public void writeFile(String filename, DataFrame newFrame) throws IOException
+  {
+    CSVWriter csv = new CSVWriter(filename);
+    csv.write(newFrame);
+  }
+
+  public void createNewList(String listname) throws IOException
+  {
+    DataFrame newFrame = new DataFrame();
+    allLabels.add(listname);
+    allDataFrames.add(newFrame);
+    listCount ++;
+    writeFile(listname,newFrame);
+  }
+
+  public void deleteList(String listname) throws IOException
+  {
+    int listIndex = allLabels.indexOf(listname);
+    allLabels.remove(listIndex);
+    allDataFrames.remove(listIndex);
+    listCount --;
+    deleteFile(listname);
+  }
+
+  public void renameList(String listname, String newname) throws IOException
+  {
+    int listIndex = allLabels.indexOf(listname);
+    allLabels.add(listIndex,newname);
+    allLabels.remove(listIndex+1);
+    renameFile(listname,newname);
   }
 }

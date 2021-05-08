@@ -42,6 +42,11 @@ class DataFrame
     return nameList;
   }
 
+  public int getColCount()
+  {
+    return columns.size();
+  }
+
   public int getRowCount()
   {
     Column col = columns.get(0);

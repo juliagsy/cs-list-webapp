@@ -1,15 +1,17 @@
 package cw3.pckg.model;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 class CSVLoader
 {
   private DataFrame dataframe;
-  int colNum;
+  private int colNum;
 
   CSVLoader()
   {
@@ -54,5 +56,59 @@ class CSVLoader
       addData(colNames,patientList);
     }
     return dataframe;
+  }
+}
+
+class CSVWriter
+{
+  private String newline = System.getProperty("line.separator"); // get newline on different systems
+  private DataFrame dataframe;
+  private FileWriter csvFile;
+  private String filename;
+  private int colNum;
+  private int rowNum;
+
+  CSVWriter(String filename)
+  {
+    this.filename = filename;
+  }
+
+  private void openFile() throws IOException
+  {
+    csvFile = new FileWriter("./data/"+filename+".csv", false);
+  }
+
+  private void initDataFrame(DataFrame dataframe)
+  {
+    this.dataframe = dataframe;
+    colNum = dataframe.getColCount();
+    if (colNum == 0)
+    {
+      rowNum = 0;
+      return;
+    }
+    rowNum = dataframe.getRowCount();
+  }
+
+  private void addColNames(ArrayList<String> allColNames) throws IOException
+  {
+    if (colNum != 0)
+    {
+      csvFile.write(allColNames.get(0));
+      int index;
+      for (index=1;index<colNum;index++)
+      {
+        csvFile.write(","+allColNames.get(index));
+      }
+    }
+    csvFile.write(newline);
+  }
+
+  public void write(DataFrame dataframe) throws IOException
+  {
+    openFile();
+    initDataFrame(dataframe);
+    addColNames(dataframe.getColumnNames());
+    csvFile.close();
   }
 }
