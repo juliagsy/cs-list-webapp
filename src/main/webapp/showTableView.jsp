@@ -1,5 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="cw3.pckg.model.DataFrame" %>
+<%@ page import="cw3.pckg.model.Model" %>
+<%@ page import="cw3.pckg.model.ModelFactory" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -11,6 +12,9 @@
   <body>
     <%
       String name = (String) request.getAttribute("viewlist");
+
+      Model model = ModelFactory.getModel();
+      ArrayList<ArrayList<String>> allDataByRow = model.viewList(name);
     %>
     <h1>"<%=name%>" Table</h1>
 
@@ -18,9 +22,7 @@
       <thead>
         <tr>
           <%
-            DataFrame frame = (DataFrame) request.getAttribute("listFrame");
-            ArrayList<String> allColName = frame.getColumnNames();
-            int rowCount = frame.getRowCount();
+            ArrayList<String> allColName = allDataByRow.get(0);
 
             for (String colName : allColName)
             {
@@ -33,16 +35,15 @@
       </thead>
       <tbody>
         <%
-          for (int count=0;count<rowCount;count++)
+          for (int count=1;count<allDataByRow.size();count++)
           {
         %>
         <tr>
           <%
-            for (String colName : allColName)
+            for (String colName : allDataByRow.get(count))
             {
-              String elem = frame.getValue(colName,count);
           %>
-          <td><%=elem%></td>
+          <td><%=colName%></td>
           <%
             }
           %>

@@ -1,5 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="cw3.pckg.model.DataFrame" %>
+<%@ page import="cw3.pckg.model.Model" %>
+<%@ page import="cw3.pckg.model.ModelFactory" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -11,22 +12,22 @@
   <body>
     <%
       String name = (String) request.getAttribute("viewlist");
+
+      Model model = ModelFactory.getModel();
+      ArrayList<ArrayList<String>> allDataByRow = model.viewList(name);
     %>
     <h1>"<%=name%>" List</h1>
     <p>
       <b>Sequence of each row: </b>
     <%
-      DataFrame frame = (DataFrame) request.getAttribute("listFrame");
-      ArrayList<String> allColName = frame.getColumnNames();
-      int rowCount = frame.getRowCount();
+      ArrayList<String> allColName = allDataByRow.get(0);
 
       String firstCol = allColName.get(0);
     %>
       <%=firstCol%>
     <%
-      for (int index=1;index<allColName.size();index++)
+      for (String colName : allColName.subList(1,allColName.size()))
       {
-        String colName = allColName.get(index);
     %>
       , <%=colName%>
     <%
@@ -36,20 +37,19 @@
 
     <ol>
       <%
-        for (int count=0;count<rowCount;count++)
+        for (ArrayList<String> rowData : allDataByRow.subList(1,allDataByRow.size()))
         {
       %>
       <li>
       <%
-          String firstElem = frame.getValue(allColName.get(0),count);
+          String firstRow = rowData.get(0);
       %>
-        <%=firstElem%>
+        <%=firstRow%>
       <%
-          for (int index=1;index<allColName.size();index++)
+          for (String row : rowData.subList(1,rowData.size()))
           {
-            String elem = frame.getValue(allColName.get(index),count);
       %>
-        , <%=elem%>
+        , <%=row%>
       <%
           }
       %>
