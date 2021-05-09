@@ -30,16 +30,17 @@
       {
     %>
     <form method="POST" action="/runrename.html">
+      <label>
+        List to be renamed:
       <%
         for (String name : listNames)
         {
       %>
-      <label>
         <input type="radio" name="list" value=<%=name%> required><%=name%>
-      </label>
       <%
         }
       %>
+      </label>
       <br>
       <label>New name: <input type="text" name="newname" value="" required></label>
       <br>

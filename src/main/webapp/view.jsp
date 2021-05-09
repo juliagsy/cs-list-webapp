@@ -7,11 +7,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Delete a list</title>
+    <title>View a list</title>
   </head>
   <body>
-    <h1>Delete Existing List</h1>
-    <h4>Please select a list to be deleted.</h4>
+    <h1>View Existing List</h1>
+    <h4>Please select a list to be viewed.</h4>
     <%
       Model model = ModelFactory.getModel();
       ArrayList<String> listNames = model.getLabels();
@@ -29,9 +29,9 @@
       else
       {
     %>
-    <form method="POST" action="/rundelete.html">
+    <form method="POST" action="/runview.html">
       <label>
-        List to be deleted:
+        List to be viewed:
       <%
         for (String name : listNames)
         {
@@ -42,7 +42,11 @@
       %>
       </label>
       <br>
-      <input type="submit" value="Delete!">
+      <label>Viewing Way:
+        <input type="radio" name="view" value="List" required> List
+        <input type="radio" name="view" value="Table"> Table
+      </label>
+      <input type="submit" value="View!">
     </form>
       <%
       }

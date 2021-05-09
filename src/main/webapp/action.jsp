@@ -15,6 +15,7 @@
     <li><a href="http://localhost:8080/create.html">Create new list</a></li>
     <li><a href="http://localhost:8080/delete.jsp">Delete an existing list</a></li>
     <li><a href="http://localhost:8080/rename.jsp">Rename a list</a></li>
+    <li><a href="http://localhost:8080/view.jsp">View a list</a></li>
   </ul>
 </body>
 </html>
