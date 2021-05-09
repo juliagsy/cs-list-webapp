@@ -2,11 +2,11 @@ package cw3.pckg.model;
 
 import java.util.ArrayList;
 
-class DataFrame
+public class DataFrame
 {
   private ArrayList<Column> columns;
 
-  DataFrame()
+  public DataFrame()
   {
     columns = new ArrayList<Column>();
   }
@@ -53,7 +53,7 @@ class DataFrame
     return col.getSize();
   }
 
-  public Object getValue(String colName, int rowNum)
+  public String getValue(String colName, int rowNum)
   {
     Column target = searchCol(colName);
     if (target.getName().compareTo("") == 0)
@@ -63,7 +63,7 @@ class DataFrame
     return target.getRowValue(rowNum);
   }
 
-  public void putValue(String colName, int rowNum, Object data)
+  public void putValue(String colName, int rowNum, String data)
   {
     Column target = searchCol(colName);
     if (target.getName().compareTo("") == 0)
@@ -73,7 +73,7 @@ class DataFrame
     target.setRowValue(rowNum,data);
   }
 
-  public void addValue(String colName, Object data)
+  public void addValue(String colName, String data)
   {
     Column target = searchCol(colName);
     if (target.getName().compareTo("") == 0)

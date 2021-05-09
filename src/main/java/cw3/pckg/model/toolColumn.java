@@ -5,17 +5,17 @@ import java.util.ArrayList;
 class Column
 {
   private String colName;
-  private ArrayList<Object> rows;
+  private ArrayList<String> rows;
 
   protected Column()
   {
-    rows = new ArrayList<Object>();
+    rows = new ArrayList<String>();
     colName = "";
   }
 
   protected Column(String name)
   {
-    rows = new ArrayList<Object>();
+    rows = new ArrayList<String>();
     colName = name;
   }
 
@@ -29,17 +29,17 @@ class Column
     return rows.size();
   }
 
-  protected Object getRowValue(int index)
+  protected String getRowValue(int index)
   {
     return rows.get(index);
   }
 
-  protected void setRowValue(int index, Object data)
+  protected void setRowValue(int index, String data)
   {
     rows.set(index,data);
   }
 
-  protected void addRowValue(Object data)
+  protected void addRowValue(String data)
   {
     rows.add(data);
   }

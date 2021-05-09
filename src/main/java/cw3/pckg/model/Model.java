@@ -98,4 +98,10 @@ public class Model
     allLabels.remove(listIndex+1);
     renameFile(listname,newname);
   }
+
+  public DataFrame viewList(String listname)
+  {
+    int listIndex = allLabels.indexOf(listname);
+    return allDataFrames.get(listIndex);
+  }
 }
