@@ -1,6 +1,5 @@
 package cw3.pckg.servlets;
 
-import cw3.pckg.model.DataFrame;
 import cw3.pckg.model.Model;
 import cw3.pckg.model.ModelFactory;
 
@@ -21,9 +20,7 @@ public class ViewServlet extends HttpServlet
   {
     Model model = ModelFactory.getModel();
 
-    DataFrame listFrame = model.viewList(request.getParameter("list"));
     request.setAttribute("viewlist",(String) request.getParameter("list"));
-    request.setAttribute("listFrame",listFrame);
 
     ServletContext context = getServletContext();
     RequestDispatcher dispatch;
@@ -35,7 +32,7 @@ public class ViewServlet extends HttpServlet
     {
       dispatch = context.getRequestDispatcher("/showTableView.jsp");
     }
-    
+
     dispatch.forward(request,response);
   }
 }

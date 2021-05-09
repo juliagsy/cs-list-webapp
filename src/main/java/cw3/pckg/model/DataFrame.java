@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class DataFrame
 {
   private ArrayList<Column> columns;
+  private int colCount;
+  private int rowCount;
 
   public DataFrame()
   {
@@ -49,8 +51,17 @@ public class DataFrame
 
   public int getRowCount()
   {
-    Column col = columns.get(0);
-    return col.getSize();
+    int rowNum;
+    try
+    {
+      Column col = columns.get(0);
+      rowNum = col.getSize();
+    }
+    catch (IndexOutOfBoundsException e)
+    {
+      rowNum = 0;
+    }
+    return rowNum;
   }
 
   public String getValue(String colName, int rowNum)
@@ -81,5 +92,16 @@ public class DataFrame
       System.out.println("Column is invalid.");
     }
     target.addRowValue(data);
+  }
+
+  public ArrayList<String> getRow(int index)
+  {
+    ArrayList<String> rowData = new ArrayList<String>();
+    ArrayList<String> allColName = getColumnNames();
+    for (String colName : allColName)
+    {
+      rowData.add(getValue(colName,index));
+    }
+    return rowData;
   }
 }

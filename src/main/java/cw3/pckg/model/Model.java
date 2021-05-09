@@ -99,9 +99,17 @@ public class Model
     renameFile(listname,newname);
   }
 
-  public DataFrame viewList(String listname)
+  public ArrayList<ArrayList<String>> viewList(String listname)
   {
     int listIndex = allLabels.indexOf(listname);
-    return allDataFrames.get(listIndex);
+    DataFrame frame = allDataFrames.get(listIndex);
+    ArrayList<ArrayList<String>> allData = new ArrayList<ArrayList<String>>();
+    allData.add(frame.getColumnNames());
+    int rowCount = frame.getRowCount();
+    for (int count=0;count<rowCount;count++)
+    {
+      allData.add(frame.getRow(count));
+    }
+    return allData;
   }
 }
