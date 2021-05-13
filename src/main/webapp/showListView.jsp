@@ -17,46 +17,21 @@
       ArrayList<ArrayList<String>> allDataByRow = model.viewList(name);
     %>
     <h1>"<%=name%>" List</h1>
-    <p>
-      <b>Sequence of each row: </b>
-    <%
-      ArrayList<String> allColName = allDataByRow.get(0);
-
-      String firstCol = allColName.get(0);
-    %>
-      <%=firstCol%>
-    <%
-      for (String colName : allColName.subList(1,allColName.size()))
-      {
-    %>
-      , <%=colName%>
-    <%
-      }
-    %>
-    </p>
-
     <ol>
       <%
-        for (ArrayList<String> rowData : allDataByRow.subList(1,allDataByRow.size()))
+        for (ArrayList<String> rowData : allDataByRow)
         {
       %>
       <li>
       <%
-          String firstRow = rowData.get(0);
+          String row = String.join(", ",rowData);
       %>
-        <%=firstRow%>
-      <%
-          for (String row : rowData.subList(1,rowData.size()))
-          {
-      %>
-        , <%=row%>
-      <%
-          }
-      %>
+        <%=row%>
       </li>
       <%
         }
       %>
     </ol>
+    <jsp:include page="/footer.jsp"/>
   </body>
 </html>

@@ -24,7 +24,7 @@
       else
       {
     %>
-    <form method="POST" action="/runview.html">
+    <form method="POST" action="/runedit.html">
       <label>
         List to be viewed: <br>
       <%
@@ -37,11 +37,8 @@
       %>
       </label>
       <br>
-      <label>Viewing Way: <br>
-        <input type="radio" name="view" value="list" required> List <br>
-        <input type="radio" name="view" value="table"> Table <br>
-      </label>
-      <input type="submit" value="View!">
+      <h5>Editing will be done through Table view.</h5>
+      <input type="submit" value="Edit!">
     </form>
       <%
       }

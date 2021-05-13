@@ -16,6 +16,9 @@
     <li><a href="http://localhost:8080/delete.jsp">Delete an existing list</a></li>
     <li><a href="http://localhost:8080/rename.jsp">Rename a list</a></li>
     <li><a href="http://localhost:8080/view.jsp">View a list</a></li>
+    <li><a href="http://localhost:8080/edit.jsp">Edit list</a></li>
+    <li><a href="http://localhost:8080/search.html">Search list or item</a></li>
   </ul>
+  <jsp:include page="/footer.jsp"/>
 </body>
 </html>

@@ -19,11 +19,6 @@
       {
     %>
     <p>Sorry, app is empty. Please add data files into the <b>data</b> directory to be loaded.</p>
-    <br>
-    <ul>
-      <li><a href="http://localhost:8080/action.jsp">Back to last page</a></li>
-      <li><a href="http://localhost:8080/index.html">Back to Start page</a></li>
-    </ul>
     <%
       }
       else
@@ -31,12 +26,12 @@
     %>
     <form method="POST" action="/rundelete.html">
       <label>
-        List to be deleted:
+        List to be deleted: <br>
       <%
         for (String name : listNames)
         {
       %>
-        <input type="radio" name="list" value=<%=name%> required><%=name%>
+        <input type="radio" name="list" value=<%=name%> required><%=name%><br>
       <%
         }
       %>
@@ -47,5 +42,6 @@
       <%
       }
       %>
+      <jsp:include page="/footer.jsp"/>
   </body>
 </html>

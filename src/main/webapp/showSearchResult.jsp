@@ -3,35 +3,40 @@
 <%@ page import="cw3.pckg.model.ModelFactory" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Viewing Data in Table</title>
+    <title>Search Result</title>
   </head>
   <body>
     <%
-      String name = (String) request.getAttribute("viewlist");
-
       Model model = ModelFactory.getModel();
-      ArrayList<ArrayList<String>> allDataByRow = model.viewList(name);
-      int colCount = model.getColCount(name);
-    %>
-    <h1>"<%=name%>" Table</h1>
+      ArrayList<Object> result = (ArrayList<Object>) request.getAttribute("result");
+      ArrayList<String> labels = (ArrayList<String>) result.get(0);
+      ArrayList<ArrayList<ArrayList<String>>> rowData = (ArrayList<ArrayList<ArrayList<String>>>) result.get(1);
 
+      for (String name : labels)
+      {
+    %>
+    <h1>"<%=name%>" Search Result</h1>
+    <%
+      for (ArrayList<ArrayList<String>> row : rowData)
+      {
+    %>
     <table>
       <tbody>
         <%
-          for (ArrayList<String> row : allDataByRow)
+          for (ArrayList<String> dataResult : row)
           {
         %>
         <tr>
           <%
             int index = 0;
-            for (String rowData : row)
+            int colCount = model.getColCount(name);
+            for (String data : dataResult)
             {
           %>
-          <td><%=rowData%></td>
+          <td><%=data%></td>
           <%
               index ++;
             }
@@ -48,6 +53,10 @@
         %>
       </tbody>
     </table>
+    <%
+      }
+    }
+    %>
     <jsp:include page="/footer.jsp"/>
   </body>
 </html>
