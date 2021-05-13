@@ -19,42 +19,33 @@ class CSVLoader
     colNum = 0;
   }
 
-  private void setColumnNames(String[] colNameList)
-  {
-    for (String name : colNameList)
-    {
-      dataframe.addColumn(name);
-    }
-  }
-
-  private void addData(String[] colNameList, String[] patientDataList)
+  private void addData(String[] dataList)
   {
     int index = 0;
-    for (String patientData : patientDataList)
+    Row row = new Row();
+    for (String data : dataList)
     {
-      dataframe.addValue(colNameList[index],patientData);
+      row.addColValue(data);
       index ++;
     }
-    if (index == colNum - 1) // zipcode (or last column) is not stated, add empty string in
+    if (index > colNum) // new longest row
     {
-      dataframe.addValue(colNameList[index],"");
+      colNum = index;
     }
+    dataframe.addRow(row);
   }
 
   DataFrame load(File filename) throws IOException
   {
     FileReader file = new FileReader(filename);
     Scanner incoming = new Scanner(file);
-    String columnName = incoming.nextLine(); // first line of the file = column names
-    String[] colNames = columnName.split(",");
-    colNum = colNames.length;
-    setColumnNames(colNames);
-    while (incoming.hasNextLine()) // remaining are patient datas
+    while (incoming.hasNextLine())
     {
-      String patient = incoming.nextLine();
-      String[] patientList = patient.split(",");
-      addData(colNames,patientList);
+      String data = incoming.nextLine();
+      String[] dataList = data.split(",");
+      addData(dataList);
     }
+    dataframe.setColCount(colNum);
     return dataframe;
   }
 }
@@ -65,7 +56,6 @@ class CSVWriter
   private DataFrame dataframe;
   private FileWriter csvFile;
   private String filename;
-  private int colNum;
   private int rowNum;
 
   CSVWriter(String filename)
@@ -81,34 +71,25 @@ class CSVWriter
   private void initDataFrame(DataFrame dataframe)
   {
     this.dataframe = dataframe;
-    colNum = dataframe.getColCount();
-    if (colNum == 0)
-    {
-      rowNum = 0;
-      return;
-    }
     rowNum = dataframe.getRowCount();
   }
 
-  private void addColNames(ArrayList<String> allColNames) throws IOException
+  private void addData() throws IOException
   {
-    if (colNum != 0)
+    for (int index=0;index<rowNum;index++)
     {
-      csvFile.write(allColNames.get(0));
-      int index;
-      for (index=1;index<colNum;index++)
-      {
-        csvFile.write(","+allColNames.get(index));
-      }
+      ArrayList<String> rowData = dataframe.getRow(index);
+      String line = String.join(",",rowData);
+      csvFile.write(line);
+      csvFile.write(newline);
     }
-    csvFile.write(newline);
   }
 
   public void write(DataFrame dataframe) throws IOException
   {
     openFile();
     initDataFrame(dataframe);
-    addColNames(dataframe.getColumnNames());
+    addData();
     csvFile.close();
   }
 }

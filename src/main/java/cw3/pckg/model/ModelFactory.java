@@ -15,4 +15,10 @@ public class ModelFactory
     }
     return model;
   }
+
+  public static Model resetModel() throws IOException
+  {
+    model = new Model();
+    return model;
+  }
 }
