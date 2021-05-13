@@ -13,24 +13,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/runview.html")
-public class ViewServlet extends HttpServlet
+@WebServlet("/runchange.html")
+public class ChangeServlet extends HttpServlet
 {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    request.setAttribute("viewlist",(String) request.getParameter("list"));
+    Model model = ModelFactory.getModel();
+
+    String target = request.getParameter("rowCol");
+    String[] targetArray = target.split("@");
+
+    model.edit(target,request.getParameter("newItem"));
 
     ServletContext context = getServletContext();
-    RequestDispatcher dispatch;
-    if (((String)request.getParameter("view")).compareTo("list") == 0)
-    {
-      dispatch = context.getRequestDispatcher("/showListView.jsp");
-    }
-    else
-    {
-      dispatch = context.getRequestDispatcher("/showTableView.jsp");
-    }
+    RequestDispatcher dispatch = context.getRequestDispatcher("/showEdit.jsp");
 
+    request.setAttribute("editlist",targetArray[0]);
     dispatch.forward(request,response);
   }
 }
