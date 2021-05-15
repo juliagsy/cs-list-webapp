@@ -37,10 +37,6 @@
       %>
       </label>
       <br>
-      <label>Viewing Way: <br>
-        <input type="radio" name="view" value="list" required> List <br>
-        <input type="radio" name="view" value="table"> Table <br>
-      </label>
       <input type="submit" value="View!">
     </form>
       <%

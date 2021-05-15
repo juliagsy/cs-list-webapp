@@ -7,45 +7,34 @@ import java.io.IOException;
 
 public class Model
 {
+  private FileController fileController;
   private ArrayList<String> allLabels;
   private ArrayList<DataFrame> allDataFrames;
   private int listCount;
 
   public Model()
   {
+    fileController = new FileController();
     allLabels = new ArrayList<String>();
     allDataFrames = new ArrayList<DataFrame>();
     listCount = 0;
   }
 
-  private void deleteFile(String name) throws IOException
-  {
-    File file = new File("./data/"+name+".csv");
-    file.delete();
-  }
-
-  private void renameFile(String oldname, String newname) throws IOException
-  {
-    File oldpath = new File("./data/"+oldname+".csv");
-    File newpath = new File("./data/"+newname+".csv");
-    oldpath.renameTo(newpath);
-  }
-
-  private void addCol(String listname, String direction, String colIndex) throws IOException
+  private void addCol(String listname, String direction, String rowIndex, String colIndex) throws IOException
   {
     DataFrame targetFrame = allDataFrames.get(allLabels.indexOf(listname));
     if (direction.compareTo("left") == 0)
     {
-      targetFrame.insertCol(Integer.valueOf(colIndex));
+      targetFrame.insertCol(Integer.valueOf(rowIndex), Integer.valueOf(colIndex));
     }
     else
     {
-      targetFrame.insertCol(Integer.valueOf(colIndex)+1);
+      targetFrame.insertCol(Integer.valueOf(rowIndex), Integer.valueOf(colIndex)+1);
     }
-    autosave(listname,targetFrame);
+    fileController.autosave(listname,targetFrame);
   }
 
-  private void addRow(String listname, String direction, String rowIndex) throws IOException
+  private void addRow(String listname, String direction, String rowIndex, String colIndex) throws IOException
   {
     DataFrame targetFrame = allDataFrames.get(allLabels.indexOf(listname));
     if (direction.compareTo("up") == 0)
@@ -56,34 +45,21 @@ public class Model
     {
       targetFrame.insertRow(Integer.valueOf(rowIndex)+1);
     }
-    autosave(listname,targetFrame);
+    fileController.autosave(listname,targetFrame);
   }
 
-  private void removeCol(String listname, String colIndex) throws IOException
+  private void removeGrid(String listname, String rowIndex, String colIndex) throws IOException
   {
     DataFrame targetFrame = allDataFrames.get(allLabels.indexOf(listname));
-    targetFrame.removeCol(Integer.valueOf(colIndex));
-    autosave(listname,targetFrame);
-  }
-
-  private void removeRow(String listname, String rowIndex) throws IOException
-  {
-    DataFrame targetFrame = allDataFrames.get(allLabels.indexOf(listname));
-    targetFrame.removeRow(Integer.valueOf(rowIndex));
-    autosave(listname,targetFrame);
+    targetFrame.deleteGrid(Integer.valueOf(rowIndex), Integer.valueOf(colIndex));
+    fileController.autosave(listname,targetFrame);
   }
 
   private void editGrid(String listname, String rowIndex, String colIndex, String newItem) throws IOException
   {
     DataFrame targetFrame = allDataFrames.get(allLabels.indexOf(listname));
     targetFrame.setGrid(Integer.valueOf(rowIndex), Integer.valueOf(colIndex),newItem);
-    autosave(listname,targetFrame);
-  }
-
-  private void autosave(String filename, DataFrame saveFrame) throws IOException
-  {
-    CSVWriter csv = new CSVWriter(filename);
-    csv.write(saveFrame);
+    fileController.autosave(listname,targetFrame);
   }
 
   public ArrayList<String> getLabels()
@@ -91,21 +67,11 @@ public class Model
     return allLabels;
   }
 
-  public int getColCount(String listname)
-  {
-    DataFrame frame = allDataFrames.get(allLabels.indexOf(listname));
-    return frame.getColCount();
-  }
-
   public void loadDataDirectory(File dataFolder) throws IOException
   {
     for (File dataFile : dataFolder.listFiles())
     {
-      if (dataFile.isDirectory())
-      {
-        loadDataDirectory(dataFile);
-      }
-      else
+      if (!dataFile.isDirectory())
       {
         loadFile(dataFile);
       }
@@ -136,7 +102,7 @@ public class Model
     allLabels.add(listname);
     allDataFrames.add(newFrame);
     listCount ++;
-    autosave(listname,newFrame);
+    fileController.autosave(listname,newFrame);
   }
 
   public void deleteList(String listname) throws IOException
@@ -145,7 +111,7 @@ public class Model
     allLabels.remove(listIndex);
     allDataFrames.remove(listIndex);
     listCount --;
-    deleteFile(listname);
+    fileController.deleteFile(listname);
   }
 
   public void renameList(String listname, String newname) throws IOException
@@ -153,7 +119,7 @@ public class Model
     int listIndex = allLabels.indexOf(listname);
     allLabels.add(listIndex,newname);
     allLabels.remove(listIndex+1);
-    renameFile(listname,newname);
+    fileController.renameFile(listname,newname);
   }
 
   public ArrayList<ArrayList<String>> viewList(String listname)
@@ -177,27 +143,17 @@ public class Model
 
     if (type.compareTo("col") == 0)
     {
-      addCol(listname,direction,targetArray[2]);
+      addCol(listname,direction,targetArray[1],targetArray[2]);
+      return;
     }
-    else
-    {
-      addRow(listname,direction,targetArray[1]);
-    }
+    addRow(listname,direction,targetArray[1],targetArray[2]);
   }
 
-  public void remove(String target, String type) throws IOException
+  public void remove(String target) throws IOException
   {
     String[] targetArray = target.split("@"); // format = [name, rowIndex, colIndex]
     String listname = targetArray[0];
-
-    if (type.compareTo("col") == 0)
-    {
-      removeCol(listname,targetArray[2]);
-    }
-    else
-    {
-      removeRow(listname,targetArray[1]);
-    }
+    removeGrid(listname, targetArray[1], targetArray[2]);
   }
 
   public void edit(String target, String newItem) throws IOException
@@ -221,12 +177,11 @@ public class Model
     {
       DataFrame dataframe = allDataFrames.get(index);
       ArrayList<ArrayList<String>> rowResult = dataframe.search(itemname);
-      if (rowResult.size() == 0)
+      if (rowResult.size() != 0)
       {
-        continue;
+        labels.add(allLabels.get(index));
+        results.add(rowResult);
       }
-      labels.add(allLabels.get(index));
-      results.add(rowResult);
     }
 
     collections.add(labels);

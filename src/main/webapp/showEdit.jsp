@@ -1,4 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="cw3.pckg.model.Validator " %>
 <%@ page import="cw3.pckg.model.Model" %>
 <%@ page import="cw3.pckg.model.ModelFactory" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,14 +14,14 @@
     <%
       String name = (String) request.getAttribute("editlist");
 
+      Validator validator = new Validator();
       Model model = ModelFactory.getModel();
       ArrayList<ArrayList<String>> allDataByRow = model.viewList(name);
-      int colCount = model.getColCount(name);
 
     %>
     <h1>"<%=name%>" Table</h1>
     <form method="POST" action="/runprocess.html">
-      <table>
+      <table border="1">
         <tbody>
           <%
           String val;
@@ -34,17 +35,22 @@
               for (String data : row)
               {
                 val = name + "@" + Integer.toString(rowNum) + "@" + Integer.toString(colNum);
+                if (validator.isURL(data))
+                {
+            %>
+            <td>
+            <input type="radio" name="rowCol" value=<%=val%> required>
+            <a href=<%=data%>><%=data%></a>
+            </td>
+            <%
+                }
+                else
+                {
             %>
             <td><input type="radio" name="rowCol" value=<%=val%> required><%=data%></td>
             <%
+                }
                 colNum ++;
-              }
-              if (colNum < colCount)
-              {
-                val = name + "@" + Integer.toString(rowNum) + "@" + Integer.toString(colNum);
-            %>
-            <td><input type="radio" name="rowCol" value=<%=val%> required>.</td>
-            <%
               }
             %>
           </tr>
@@ -59,10 +65,9 @@
         <input type="radio" name="editType" value="add@col@right">Add Column to the Right<br>
         <input type="radio" name="editType" value="add@row@up">Add Row Above<br>
         <input type="radio" name="editType" value="add@row@down">Add Row Bottom<br>
-        <input type="radio" name="editType" value="remove@col">Remove Column<br>
-        <input type="radio" name="editType" value="remove@row">Remove Row<br>
+        <input type="radio" name="editType" value="remove">Remove Grid<br>
         <input type="radio" name="editType" value="edit">Edit this Grid<br>
-        <input type="radio" name="editType" value="link" disabled>Link URL, Image or List to this Grid<br>
+        <input type="radio" name="editType" value="link">Link URL, Image or List to this Grid<br>
       </label>
       <input type="submit" value="Process!">
     </form>

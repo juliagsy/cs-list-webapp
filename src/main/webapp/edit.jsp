@@ -7,10 +7,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>View a list</title>
+    <title>Edit a list</title>
   </head>
   <body>
-    <h1>View Existing List</h1>
+    <h1>Edit Existing List</h1>
     <h4>Please select a list to be viewed.</h4>
     <%
       Model model = ModelFactory.getModel();
@@ -37,7 +37,6 @@
       %>
       </label>
       <br>
-      <h5>Editing will be done through Table view.</h5>
       <input type="submit" value="Edit!">
     </form>
       <%

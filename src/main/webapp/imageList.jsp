@@ -3,20 +3,21 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Edit item in a list</title>
+    <title>Link image or list</title>
   </head>
   <body>
     <%
       String rowCol = (String)(request.getAttribute("rowCol"));
     %>
 
-    <h3>Edit an item</h3>
+    <h3>Link an image or list</h3>
+    <p>Please ensure that all items to be linked are <b>included in the data directory</b> too!</p>
     <form action="/runchange.html" method="POST">
       <label>
-        Text of new item:
+        Type of file to link: <br>
         <input type="hidden" name="rowCol" value=<%=rowCol%>>
-        <input type="text" name="newItem" value="" required> <br>
-        <input type="submit" value="Change!">
+        <input type="file" name="newItem" accept=".jpg, .jpeg, .heif, .png, .gif, .pdf, .csv" required> <br>
+        <input type="submit" value="Next">
       </label>
     </form>
     <jsp:include page="/footer.jsp"/>

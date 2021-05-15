@@ -6,47 +6,47 @@ class Row
 {
   private ArrayList<String> columns;
 
-  protected Row()
+  Row()
   {
     columns = new ArrayList<String>();
   }
 
-  protected int getSize()
+  int getSize()
   {
     return columns.size();
   }
 
-  protected ArrayList<String> getCol()
+  ArrayList<String> getCol()
   {
     return columns;
   }
 
-  protected String getColValue(int index)
+  String getColValue(int index)
   {
     return columns.get(index);
   }
 
-  protected void setColValue(int index, String data)
+  void setColValue(int index, String data)
   {
     columns.set(index,data);
   }
 
-  protected void addColValue(String data)
+  void addColValue(String data)
   {
     columns.add(data);
   }
 
-  protected void insertColValue(int index, String data)
+  void insertColValue(int index, String data)
   {
     columns.add(index,data);
   }
 
-  protected void deleteCol(int index)
+  void deleteCol(int index)
   {
     columns.remove(index);
   }
 
-  protected boolean search(String item)
+  boolean search(String item)
   {
     boolean result = false;
     for (String value : columns)

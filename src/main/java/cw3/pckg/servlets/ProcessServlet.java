@@ -36,7 +36,7 @@ public class ProcessServlet extends HttpServlet
     }
     else if (typeArray[0].compareTo("remove") == 0)
     {
-      model.remove(target,typeArray[1]);
+      model.remove(target);
       dispatch = context.getRequestDispatcher("/showEdit.jsp");
       request.setAttribute("editlist",targetArray[0]);
     }
@@ -45,9 +45,9 @@ public class ProcessServlet extends HttpServlet
       dispatch = context.getRequestDispatcher("/change.jsp");
       request.setAttribute("rowCol",target);
     }
-    else 
+    else
     {
-      dispatch = context.getRequestDispatcher("/link.html");
+      dispatch = context.getRequestDispatcher("/link.jsp");
       request.setAttribute("rowCol",target);
     }
 

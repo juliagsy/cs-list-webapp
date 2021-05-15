@@ -1,6 +1,3 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <html>
 <head>
   <title>Perform Operations</title>
@@ -16,8 +13,8 @@
     <li><a href="http://localhost:8080/delete.jsp">Delete an existing list</a></li>
     <li><a href="http://localhost:8080/rename.jsp">Rename a list</a></li>
     <li><a href="http://localhost:8080/view.jsp">View a list</a></li>
-    <li><a href="http://localhost:8080/edit.jsp">Edit list</a></li>
-    <li><a href="http://localhost:8080/search.html">Search list or item</a></li>
+    <li><a href="http://localhost:8080/edit.jsp">Edit or Link Item to List</a></li>
+    <li><a href="http://localhost:8080/search.html">Search List or Item</a></li>
   </ul>
   <jsp:include page="/footer.jsp"/>
 </body>

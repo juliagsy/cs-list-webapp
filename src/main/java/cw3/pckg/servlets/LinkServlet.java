@@ -13,15 +13,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/runview.html")
-public class ViewServlet extends HttpServlet
+@WebServlet("/runlink.html")
+public class LinkServlet extends HttpServlet
 {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    request.setAttribute("viewlist",(String) request.getParameter("list"));
+    Model model = ModelFactory.getModel();
+
+    String target = (String) request.getParameter("rowCol");
+    String type = request.getParameter("linkType");
 
     ServletContext context = getServletContext();
-    RequestDispatcher dispatch = context.getRequestDispatcher("/showTableView.jsp");
+    RequestDispatcher dispatch;
+
+    if (type.compareTo("image") == 0)
+    {
+      dispatch = context.getRequestDispatcher("/imageList.jsp");
+    }
+    else
+    {
+      dispatch = context.getRequestDispatcher("/url.jsp");
+    }
+
+    request.setAttribute("rowCol",target);
     dispatch.forward(request,response);
   }
 }

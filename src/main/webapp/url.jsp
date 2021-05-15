@@ -3,20 +3,20 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Edit item in a list</title>
+    <title>Link item</title>
   </head>
   <body>
     <%
       String rowCol = (String)(request.getAttribute("rowCol"));
     %>
 
-    <h3>Edit an item</h3>
+    <h3>Link a URL</h3>
     <form action="/runchange.html" method="POST">
       <label>
-        Text of new item:
+        Please input your valid URL: <br>
         <input type="hidden" name="rowCol" value=<%=rowCol%>>
-        <input type="text" name="newItem" value="" required> <br>
-        <input type="submit" value="Change!">
+        <input type="url" name="newItem"> <br>
+        <input type="submit" value="Next">
       </label>
     </form>
     <jsp:include page="/footer.jsp"/>
