@@ -46,21 +46,7 @@ public class Model
       targetFrame.insertRow(Integer.valueOf(rowIndex)+1);
     }
     fileController.autosave(listname,targetFrame);
-  }
-
-  private void removeGrid(String listname, String rowIndex, String colIndex) throws IOException
-  {
-    DataFrame targetFrame = allDataFrames.get(allLabels.indexOf(listname));
-    targetFrame.deleteGrid(Integer.valueOf(rowIndex), Integer.valueOf(colIndex));
-    fileController.autosave(listname,targetFrame);
-  }
-
-  private void editGrid(String listname, String rowIndex, String colIndex, String newItem) throws IOException
-  {
-    DataFrame targetFrame = allDataFrames.get(allLabels.indexOf(listname));
-    targetFrame.setGrid(Integer.valueOf(rowIndex), Integer.valueOf(colIndex),newItem);
-    fileController.autosave(listname,targetFrame);
-  }
+  } 
 
   public ArrayList<String> getLabels()
   {
@@ -152,14 +138,21 @@ public class Model
   public void remove(String target) throws IOException
   {
     String[] targetArray = target.split("@"); // format = [name, rowIndex, colIndex]
-    String listname = targetArray[0];
-    removeGrid(listname, targetArray[1], targetArray[2]);
+
+    DataFrame targetFrame = allDataFrames.get(allLabels.indexOf(targetArray[0]));
+    targetFrame.deleteGrid(Integer.valueOf(targetArray[1]), Integer.valueOf(targetArray[2]));
+    fileController.autosave(targetArray[0],targetFrame);
+
   }
 
   public void edit(String target, String newItem) throws IOException
   {
     String[] targetArray = target.split("@"); // format = [listname, rowIndex, colIndex]
-    editGrid(targetArray[0], targetArray[1], targetArray[2], newItem);
+
+    DataFrame targetFrame = allDataFrames.get(allLabels.indexOf(targetArray[0]));
+    targetFrame.setGrid(Integer.valueOf(targetArray[1]), Integer.valueOf(targetArray[2]),newItem);
+    fileController.autosave(targetArray[0],targetFrame);
+
   }
 
   public int searchList(String listname)

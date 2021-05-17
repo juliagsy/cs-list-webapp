@@ -1,7 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="cw3.pckg.model.Validator" %>
-<%@ page import="cw3.pckg.model.Model" %>
-<%@ page import="cw3.pckg.model.ModelFactory" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -12,11 +10,9 @@
   </head>
   <body>
     <%
-      String name = (String) request.getAttribute("viewlist");
-
       Validator validator = new Validator();
-      Model model = ModelFactory.getModel();
-      ArrayList<ArrayList<String>> allDataByRow = model.viewList(name);
+      String name = (String) request.getAttribute("viewname");
+      ArrayList<ArrayList<String>> allDataByRow = (ArrayList<ArrayList<String>>)request.getAttribute("viewlist");
     %>
     <h1>"<%=name%>" Table</h1>
 

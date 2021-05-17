@@ -32,12 +32,13 @@ public class SearchServlet extends HttpServlet
       int resultIndex = model.searchList(target);
       if (resultIndex == -1)
       {
-        dispatch = context.getRequestDispatcher("/searchError.html");
+        dispatch = context.getRequestDispatcher("/searchError.jsp");
       }
       else
       {
         dispatch = context.getRequestDispatcher("/showTableView.jsp");
-        request.setAttribute("viewlist",target);
+        request.setAttribute("viewname",target);
+        request.setAttribute("viewlist",model.viewList(target));
       }
     }
     else

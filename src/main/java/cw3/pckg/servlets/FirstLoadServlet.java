@@ -19,7 +19,7 @@ public class FirstLoadServlet extends HttpServlet
 {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    Model model = ModelFactory.resetModel();
+    Model model = ModelFactory.resetModel(); // in the case where user reloads files, model will not have duplicates
 
     model.loadDataDirectory(new File("./data/"));
 

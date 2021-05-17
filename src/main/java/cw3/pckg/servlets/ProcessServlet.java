@@ -32,13 +32,15 @@ public class ProcessServlet extends HttpServlet
     {
       model.add(target,typeArray[1],typeArray[2]);
       dispatch = context.getRequestDispatcher("/showEdit.jsp");
-      request.setAttribute("editlist",targetArray[0]);
+      request.setAttribute("editname",targetArray[0]);
+      request.setAttribute("editlist",model.viewList(targetArray[0]));
     }
     else if (typeArray[0].compareTo("remove") == 0)
     {
       model.remove(target);
       dispatch = context.getRequestDispatcher("/showEdit.jsp");
-      request.setAttribute("editlist",targetArray[0]);
+      request.setAttribute("editname",targetArray[0]);
+      request.setAttribute("editlist",model.viewList(targetArray[0]));
     }
     else if (typeArray[0].compareTo("edit") == 0)
     {

@@ -18,7 +18,11 @@ public class EditServlet extends HttpServlet
 {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    request.setAttribute("editlist",(String) request.getParameter("list"));
+    Model model = ModelFactory.getModel();
+
+    String name =(String) request.getParameter("list");
+    request.setAttribute("editname",name);
+    request.setAttribute("editlist",model.viewList(name));
 
     ServletContext context = getServletContext();
     RequestDispatcher dispatch = context.getRequestDispatcher("/showEdit.jsp");;

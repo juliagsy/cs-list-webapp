@@ -18,7 +18,11 @@ public class ViewServlet extends HttpServlet
 {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    request.setAttribute("viewlist",(String) request.getParameter("list"));
+    Model model = ModelFactory.getModel();
+
+    String name = (String) request.getParameter("list");
+    request.setAttribute("viewname",name);
+    request.setAttribute("viewlist",model.viewList(name));
 
     ServletContext context = getServletContext();
     RequestDispatcher dispatch = context.getRequestDispatcher("/showTableView.jsp");

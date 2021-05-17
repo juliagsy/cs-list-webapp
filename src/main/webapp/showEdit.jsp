@@ -1,7 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="cw3.pckg.model.Validator " %>
-<%@ page import="cw3.pckg.model.Model" %>
-<%@ page import="cw3.pckg.model.ModelFactory" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -12,11 +10,9 @@
   </head>
   <body>
     <%
-      String name = (String) request.getAttribute("editlist");
-
       Validator validator = new Validator();
-      Model model = ModelFactory.getModel();
-      ArrayList<ArrayList<String>> allDataByRow = model.viewList(name);
+      String name = (String) request.getAttribute("editname");
+      ArrayList<ArrayList<String>> allDataByRow = (ArrayList<ArrayList<String>>) request.getAttribute("editlist");
 
     %>
     <h1>"<%=name%>" Table</h1>
@@ -61,8 +57,8 @@
         </tbody>
       </table>
       <label>
-        <input type="radio" name="editType" value="add@col@left" required>Add Column to the Left<br>
-        <input type="radio" name="editType" value="add@col@right">Add Column to the Right<br>
+        <input type="radio" name="editType" value="add@col@left" required>Add Grid to the Left<br>
+        <input type="radio" name="editType" value="add@col@right">Add Grid to the Right<br>
         <input type="radio" name="editType" value="add@row@up">Add Row Above<br>
         <input type="radio" name="editType" value="add@row@down">Add Row Bottom<br>
         <input type="radio" name="editType" value="remove">Remove Grid<br>

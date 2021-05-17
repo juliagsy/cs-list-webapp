@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 
 <head>
@@ -11,7 +10,7 @@
   <p>All data files will be saved in the <b>data</b> directory as the name of the list.</p>
   <form method="POST" action="/runcreate.html">
     <label for="listname">Name of new list: </label>
-    <input type="text" name="listname" value="">
+    <input type="text" name="listname" value="" required>
     <br>
     <input type="submit" value="Create!">
   </form>

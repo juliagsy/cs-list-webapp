@@ -15,7 +15,7 @@
       <label>
         Please input your valid URL: <br>
         <input type="hidden" name="rowCol" value=<%=rowCol%>>
-        <input type="url" name="newItem"> <br>
+        <input type="url" name="newItem" required> <br>
         <input type="submit" value="Next">
       </label>
     </form>

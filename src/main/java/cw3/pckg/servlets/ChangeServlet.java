@@ -28,7 +28,8 @@ public class ChangeServlet extends HttpServlet
     ServletContext context = getServletContext();
     RequestDispatcher dispatch = context.getRequestDispatcher("/showEdit.jsp");
 
-    request.setAttribute("editlist",targetArray[0]);
+    request.setAttribute("editname",targetArray[0]);
+    request.setAttribute("editlist",model.viewList(targetArray[0]));
     dispatch.forward(request,response);
   }
 }

@@ -14,17 +14,15 @@
       ArrayList<String> labels = (ArrayList<String>) result.get(0);
       ArrayList<ArrayList<ArrayList<String>>> rowData = (ArrayList<ArrayList<ArrayList<String>>>) result.get(1);
 
+      int index = 0;
       for (String name : labels)
       {
     %>
     <h1>"<%=name%>" Search Result</h1>
-    <%
-      for (ArrayList<ArrayList<String>> row : rowData)
-      {
-    %>
-    <table>
+    <table border="1">
       <tbody>
-        <%
+    <%
+          ArrayList<ArrayList<String>> row = rowData.get(index);
           for (ArrayList<String> dataResult : row)
           {
         %>
@@ -32,7 +30,6 @@
           <%
             for (String data : dataResult)
             {
-              {
                 if (validator.isURL(data)) // include link for redirecting
                 {
             %>
@@ -41,7 +38,7 @@
                 }
                 else if (validator.isList(data)) // include button for viewing sublists
                 {
-                  String listname = rowData.substring(0,rowData.lastIndexOf("."));
+                  String listname = data.substring(0,data.lastIndexOf("."));
             %>
             <td>
             <form action="/runsearch.html" method="POST">
@@ -72,12 +69,12 @@
         </tr>
         <%
           }
+          index ++;
         %>
-      </tbody>
-    </table>
-    <%
-      }
-    }
+  </tbody>
+</table>
+<%
+  }
     %>
     <jsp:include page="/footer.jsp"/>
   </body>
